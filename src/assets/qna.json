@@ -1,0 +1,14 @@
+[
+    { "question": "What is the largest mammal?", "opt": ["Dog", "Cat", "Horse", "All the same"], "correct": 3},
+    { "question": "How does one gain the ability to fly?", "opt": ["You fly", "Become birb", "Not possible", "Just do it"], "correct": 1},
+    { "question": "If I can fly in my dreams, am I a birb?", "opt": ["Yes", "No", "Maybe", "Perhaps"], "correct": 0},
+    { "question": "How many dogs exist?", "opt": ["5", "10", "666", "5 594 338 000"], "correct": 2},
+    { "question": "What is 5+5?", "opt": ["5", "No", "10", "Not a number"], "correct": 2},
+    { "question": "How many cats are needed?", "opt": ["75756", "429347573275", "5", "None"], "correct": 2},
+    { "question": "What is love?", "opt": ["Baby don't hurt me", "Don't hurt me", "No more", "An illusion ;_;"], "correct": 3},
+    { "question": "What is the radius of you're house? (in meters)", "opt": ["5", "285", "420", "10000"], "correct": 2},
+    { "question": "What is the mass of the Sun? (in tonnes)", "opt": ["A lot", "500", "5", "The Sun has no mass"], "correct": 1},
+    { "question": "How fast does light travel?", "opt": ["5", "Yes", "Fast", "At the speed of light"], "correct": 3},
+    { "question": "What are birbs actually?", "opt": ["Surveillance drones", "Horses", "Birbs", "Borbs"], "correct": 0},
+    { "question": "How is it possible to get a horse?", "opt": ["It's not possible", "Horses are not real", "Just get it", "Bribe the government"], "correct": 3}
+]
