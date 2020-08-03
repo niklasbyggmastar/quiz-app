@@ -2,9 +2,9 @@ import React from 'react';
 import Header from "./components/Header";
 import Question from "./components/Question";
 import AnswerBox from "./components/AnswerBox";
-import ResultIndicator from "./components/ResultIndicator";
 import myJson from "./assets/qna.json"
 import "./App.scss";
+import { ProgressBar } from 'react-bootstrap';
 
 class App extends React.Component {
 
@@ -17,9 +17,10 @@ class App extends React.Component {
 			options: [],
 			correctAnswer: "",
 			showIndicator: false,
-			isCorrect: false,
+			isCorrect: null,
 			score: 0,
-			round: 0
+			round: 0,
+			progress: 0
 		}
 
 		this.checkAnswer = this.checkAnswer.bind(this);
@@ -33,13 +34,21 @@ class App extends React.Component {
 
 	checkAnswer(answer) {
 		this.setState({ round: this.state.round + 1 }, () => {
+			this.setState({ progress: Math.ceil((this.state.round/this.state.qaList.length)*100) });
 			if (this.state.round < this.state.qaList.length) {
-				if (answer == this.state.correctAnswerIndex) {
+				if (answer === this.state.correctAnswerIndex) {
 					this.setState({ score: this.state.score + 1 });
 				}
-				this.setState({ isCorrect: answer == this.state.correctAnswerIndex, showIndicator: true });
+				this.setState({ isCorrect: answer === this.state.correctAnswerIndex, showIndicator: true });
 				this.nextQuestion();
-			} else if (this.state.round == this.state.qaList.length) {
+			} else if (this.state.round === this.state.qaList.length) {
+				/**
+				 * 
+				 * 
+				 * TODO
+				 * 
+				 * 
+				 */
 				console.log("GAME OVER");
 				alert(`SCORE: ${this.state.score}/${this.state.round}`);
 			}
@@ -49,8 +58,9 @@ class App extends React.Component {
 	nextQuestion() {
 		setTimeout(() => {
 			this.getQuestion();
-			this.setState({ isCorrect: false, showIndicator: false });
-		}, 2500);
+			this.setState({ isCorrect: null, showIndicator: false });
+			document.activeElement.blur();
+		}, 1500);
 	}
 	
 	getQuestion() {
@@ -74,8 +84,12 @@ class App extends React.Component {
 			<div className="main">
 				<Header />
 				<Question value={this.state.question} />
-				<AnswerBox options={this.state.options} correctAnswerIndex={this.state.correctAnswerIndex} checkAnswer={this.checkAnswer} />
-				<ResultIndicator show={this.state.showIndicator} isCorrect={this.state.isCorrect} />
+				<AnswerBox 
+					options={this.state.options} 
+					correctAnswerIndex={this.state.correctAnswerIndex} 
+					checkAnswer={this.checkAnswer}
+					showIndicator={this.state.showIndicator} />
+				<ProgressBar now={this.state.progress} label={`${this.state.progress}%`} variant={this.state.progress == 100 ? "success": ""} />
 			</div>
 		);
 	}

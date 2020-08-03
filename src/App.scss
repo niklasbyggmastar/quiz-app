@@ -10,7 +10,26 @@
   border: .5px solid gray;
   padding: 25px;
   border-radius: 7px;
-  min-width: 250px;
-  max-width: 650px;
-  margin: 30vh 0;
+  width: 500px;
+  margin: 15vh 0;
+}
+
+.answerBtn:hover, .answerBtn:focus {
+  background-color: rgb(240,240,240);
+}
+
+.answerBtn.correct {
+  background-color: rgb(100,255,100);
+}
+
+.answerBtn.false {
+  background-color: rgb(255,100,100);
+}
+
+@media only screen and (max-width: 500px) {
+  .main {
+    margin: 10vh 0;
+    width: 100%;
+    border: unset;
+  }
 }

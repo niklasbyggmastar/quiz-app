@@ -1,14 +1,19 @@
 import React from "react";
+import AnswerBtn from "./AnswerBtn";
 
-const AnswerBox = ({answer, correctAnswerIndex, options, checkAnswer}) => {
+const AnswerBox = ({ options, checkAnswer, correctAnswerIndex, showIndicator }) => {
 
     return (
         <div className="form-group">
-
             {options.map((val, i) => 
-                <button key={i} type="button" onClick={() => checkAnswer(i)}>{ val }</button>
+                <AnswerBtn 
+                    key={i} 
+                    index={i} 
+                    text={val} 
+                    correctAnswerIndex={correctAnswerIndex} 
+                    showIndicator={showIndicator} 
+                    checkAnswer={checkAnswer} />
             )}
-
         </div>
     )
 
