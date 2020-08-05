@@ -5,6 +5,7 @@ import AnswerBox from "./components/AnswerBox";
 import myJson from "./assets/qna.json"
 import "./App.scss";
 import { ProgressBar } from 'react-bootstrap';
+import GameOver from './components/GameOver';
 
 class App extends React.Component {
 
@@ -20,10 +21,12 @@ class App extends React.Component {
 			isCorrect: null,
 			score: 0,
 			round: 0,
-			progress: 0
+			progress: 0,
+			disabledBtns: false
 		}
 
 		this.checkAnswer = this.checkAnswer.bind(this);
+		this.restart = this.restart.bind(this);
 	}
 
 	componentDidMount() {
@@ -33,24 +36,15 @@ class App extends React.Component {
 	}
 
 	checkAnswer(answer) {
-		this.setState({ round: this.state.round + 1 }, () => {
+		this.setState({ round: this.state.round + 1, disabledBtns: true }, () => {
 			this.setState({ progress: Math.ceil((this.state.round/this.state.qaList.length)*100) });
+			if (answer === this.state.correctAnswerIndex) {
+				this.setState({ score: this.state.score + 1 });
+			}
+			this.setState({ isCorrect: answer === this.state.correctAnswerIndex, showIndicator: true });
+			
 			if (this.state.round < this.state.qaList.length) {
-				if (answer === this.state.correctAnswerIndex) {
-					this.setState({ score: this.state.score + 1 });
-				}
-				this.setState({ isCorrect: answer === this.state.correctAnswerIndex, showIndicator: true });
 				this.nextQuestion();
-			} else if (this.state.round === this.state.qaList.length) {
-				/**
-				 * 
-				 * 
-				 * TODO
-				 * 
-				 * 
-				 */
-				console.log("GAME OVER");
-				alert(`SCORE: ${this.state.score}/${this.state.round}`);
 			}
 		});
 	}
@@ -58,7 +52,7 @@ class App extends React.Component {
 	nextQuestion() {
 		setTimeout(() => {
 			this.getQuestion();
-			this.setState({ isCorrect: null, showIndicator: false });
+			this.setState({ isCorrect: null, showIndicator: false, disabledBtns: false });
 			document.activeElement.blur();
 		}, 1500);
 	}
@@ -79,17 +73,36 @@ class App extends React.Component {
 		return array;
 	}
 
+	restart() {
+		this.setState({
+			showIndicator: false,
+			isCorrect: null,
+			score: 0,
+			round: 0,
+			progress: 0,
+			disabledBtns: false
+		});
+	}
+
 	render() {
 		return (
 			<div className="main">
-				<Header />
-				<Question value={this.state.question} />
-				<AnswerBox 
-					options={this.state.options} 
-					correctAnswerIndex={this.state.correctAnswerIndex} 
-					checkAnswer={this.checkAnswer}
-					showIndicator={this.state.showIndicator} />
-				<ProgressBar now={this.state.progress} label={`${this.state.progress}%`} variant={this.state.progress == 100 ? "success": ""} />
+				<Header gameOver={this.state.round === this.state.qaList.length} />
+
+				{this.state.round === this.state.qaList.length ? (
+					<GameOver score={this.state.score} restart={this.restart} />
+				) : (
+					<div>
+						<Question value={this.state.question} />
+						<AnswerBox 
+							options={this.state.options} 
+							correctAnswerIndex={this.state.correctAnswerIndex} 
+							checkAnswer={this.checkAnswer}
+							showIndicator={this.state.showIndicator}
+							disabledBtns={this.state.disabledBtns} />
+						<ProgressBar now={this.state.progress} label={`${this.state.progress}%`} variant={this.state.progress == 100 ? "success": ""} />
+					</div>
+				)}
 			</div>
 		);
 	}

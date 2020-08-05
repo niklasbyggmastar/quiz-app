@@ -4,14 +4,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(250,250,250);
+  height: 100vh;
 }
 
 .main {
   border: .5px solid gray;
   padding: 25px;
   border-radius: 7px;
-  width: 500px;
-  margin: 15vh 0;
+  width: 500px;  
+  box-shadow: 5px 5px rgba(0,0,0,0.2);
+  background-color: rgb(255,255,255);
 }
 
 .answerBtn:hover, .answerBtn:focus {
@@ -26,10 +29,20 @@
   background-color: rgb(255,100,100);
 }
 
+.disabled {
+  user-select: none;
+  pointer-events: none;
+}
+
 @media only screen and (max-width: 500px) {
   .main {
     margin: 10vh 0;
     width: 100%;
     border: unset;
+    box-shadow: none;
+  }
+
+  #root {
+    background-color: white;
   }
 }

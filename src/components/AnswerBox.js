@@ -1,7 +1,7 @@
 import React from "react";
 import AnswerBtn from "./AnswerBtn";
 
-const AnswerBox = ({ options, checkAnswer, correctAnswerIndex, showIndicator }) => {
+const AnswerBox = ({ options, checkAnswer, correctAnswerIndex, showIndicator, disabledBtns }) => {
 
     return (
         <div className="form-group">
@@ -12,7 +12,8 @@ const AnswerBox = ({ options, checkAnswer, correctAnswerIndex, showIndicator }) 
                     text={val} 
                     correctAnswerIndex={correctAnswerIndex} 
                     showIndicator={showIndicator} 
-                    checkAnswer={checkAnswer} />
+                    checkAnswer={checkAnswer}
+                    disabledBtns={disabledBtns} />
             )}
         </div>
     )
